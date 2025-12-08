@@ -79,8 +79,17 @@ def extract_video_data(video_ids):
         return extracted_data
     except requests.exceptions.RequestException as e:
         print(f"An error occurred:{e}")    
+   
+
+from datetime import date 
+def save_to_json(extracted_data):
+    file_path=f"D:\work\youtube_video_ELT\data\extracted_video_data_{date.today()}.json"
+    with open(file_path,"w",encoding="utf-8") as json_outfile:
+        json.dump(extracted_data,json_outfile,ensure_ascii=False,indent=4) 
+
+
 if __name__ == "__main__":   
     playlistId=get_playlist_id()
     video_ids=get_video_ids(playlistId)
-    extract_video_data(video_ids)
-        
+    extracted_data=extract_video_data(video_ids)
+    save_to_json(extracted_data)
